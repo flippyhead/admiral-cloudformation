@@ -1,42 +1,47 @@
 require 'json'
+require 'thor'
 require_relative 'util'
 
 module Admiral
   module Tasks
-    module CloudFormation
-
+    class CloudFormation < Thor
       include Util::CloudFormation
 
-      def self.included(thor_cli)
-        thor_cli.class_eval do
+      NAME = 'cf'
+      USAGE = 'cf <command> <options>'
+      DESCRIPTION = 'Commands for wielding AWS CloudFormation templates.'
 
-          desc "create ENVIRONMENT", "Create stack for ENVIRONMENT"
-          option :template, desc: 'A CloudFormation template', default: "CloudFormation.template"
-          option :params, desc: 'Parameter definitions for CloudFormation template.'
-          option :update_instances, desc: 'Replace and update existing instances', type: :boolean, default: 'true'
-          def create(env)
-            template = File.read options[:template]
-            params = JSON.parse File.read(options[:params] || "#{environment}.json")
+      namespace :cf
 
-            create_or_update stack_name(env), template, params
-          end
+      default_command :create
 
-          desc "destroy ENVIRONMENT", "Destroys ENVIRONMENT"
-          def destroy(env)
-            super stack_name(env)
-          end
+      class_option :template,
+        desc: 'Path to CloudFormation JSON template.',
+        default: "CloudFormation.template"
 
-        end
+      class_option :params,
+        desc: 'Path to parameter definitions JSON file. Defaults to ENVIRONMENT.'
+
+
+      desc "create (or update) ENVIRONMENT", "Create (or update if exists) stack for ENVIRONMENT"
+
+      def create(env)
+        template = File.read options[:template]
+        create_stack stack_name(env), template, params(env)
       end
 
-      private
 
-      def stack_name(env)
-        "#{env}-#{name}"
+      desc "update ENVIRONMENT", "Update stack for ENVIRONMENT"
+
+      def update(env)
+        template = File.read options[:template]
+        update_stack stack_name(env), template, params(env)
       end
 
-      def name
-        ENV["NAME"] || "test"
+      desc "destroy ENVIRONMENT", "Destroys ENVIRONMENT"
+
+      def destroy(env)
+        super stack_name(env)
       end
 
     end
