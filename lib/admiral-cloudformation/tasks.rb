@@ -1,11 +1,13 @@
 require 'json'
 require 'thor'
+require 'admiral/base'
 require_relative 'util'
 
 module Admiral
   module Tasks
     class CloudFormation < Thor
       include Util::CloudFormation
+      extend Admiral::Base
 
       NAME = 'cf'
       USAGE = 'cf <command> <options>'
@@ -17,31 +19,32 @@ module Admiral
 
       class_option :template,
         desc: 'Path to CloudFormation JSON template.',
-        default: "CloudFormation.template"
+        default: 'CloudFormation.template'
 
       class_option :params,
-        desc: 'Path to parameter definitions JSON file. Defaults to ENVIRONMENT.'
+        desc: 'Path to override parameter definitions file. Defaults to <environment>.json'
 
 
-      desc "create ENVIRONMENT", "Create new stack for ENVIRONMENT"
+      desc 'create', 'Create new CloudFormation stack for environment.'
 
-      def create(env)
+      def create
         template = File.read options[:template]
-        create_stack stack_name(env), template, params(env)
+        create_stack stack_name(options[:environment]), template, params(options[:environment])
       end
 
 
-      desc "update ENVIRONMENT", "Update stack for ENVIRONMENT"
+      desc 'update', 'Update the existing CloudFormation stack'
 
-      def update(env)
+      def update
         template = File.read options[:template]
-        update_stack stack_name(env), template, params(env)
+        update_stack stack_name(options[:environment]), template, params(options[:environment])
       end
 
-      desc "destroy ENVIRONMENT", "Destroys ENVIRONMENT"
 
-      def destroy(env)
-        super stack_name(env)
+      desc 'destroy', 'Destroy the existing CloudFormation stack.'
+
+      def destroy
+        super stack_name options[:environment]
       end
 
     end
