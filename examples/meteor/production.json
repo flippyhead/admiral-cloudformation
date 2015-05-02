@@ -1,0 +1,10 @@
+{
+  "Route53ZoneName": "example.io.",
+  "AppDomainName": "app.example.io",
+  "SSLCertificateName": "app.example.io",
+  "SshKeyName": "production",
+  "InstanceCount":"1",
+  "InstanceType": "t2.small",
+  "SecurityGroupLoadBalancer": "sg-8ad62234ef",
+  "SecurityGroupMeteorLayer": "sg-2265dsd7"
+}

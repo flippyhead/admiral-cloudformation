@@ -6,8 +6,8 @@ require_relative 'util'
 module Admiral
   module Tasks
     class CloudFormation < Thor
-      include Util::CloudFormation
       extend Admiral::Base
+      include Util::CloudFormation
 
       NAME = 'cf'
       USAGE = 'cf <command> <options>'
