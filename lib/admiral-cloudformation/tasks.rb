@@ -23,7 +23,7 @@ module Admiral
         desc: 'Path to parameter definitions JSON file. Defaults to ENVIRONMENT.'
 
 
-      desc "create (or update) ENVIRONMENT", "Create (or update if exists) stack for ENVIRONMENT"
+      desc "create ENVIRONMENT", "Create new stack for ENVIRONMENT"
 
       def create(env)
         template = File.read options[:template]

@@ -1,0 +1,132 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "CookbookRepo": {
+            "Description": "GitURL",
+            "Type": "String",
+            "Default": "https://github.com/flippyhead/chef-mongodb"
+        },
+
+        "MongoVersion": {
+            "Description": "The version of MongoDB to install.",
+            "Type": "String",
+            "Default": "2.6.1"
+        },
+
+        "RecipeList": {
+            "Description": "The list of cookbooks to include when setting up the cluster.",
+            "Type": "CommaDelimitedList",
+            "Default": "mongodb::10gen_repo, mongodb::default"
+        },
+
+        "SshKeyName": {
+            "Description": "SSH key name for EC2 instances.",
+            "Type": "String"
+        },
+
+        "InstanceCount": {
+            "Description": "The number of instances to launch.",
+            "Type": "Number",
+            "Default": 1
+        },
+
+        "InstanceType": {
+            "Description": "The type of instance to launch.",
+            "Type": "String",
+            "Default": "t2.small"
+        },
+
+        "SecurityGroupMongoLayer": {
+            "Description": "The mongo layer security group.",
+            "Type": "String"
+        }
+
+    },
+
+    "Outputs": {
+        "StackId": {
+            "Description": "opsworks stack id ",
+            "Value": { "Ref": "MongoStack"}
+        },
+
+        "LayerId": {
+            "Description": "opsworks mongo layer id ",
+            "Value": { "Ref": "MongoLayer"}
+        }
+
+    },
+
+    "Resources": {
+
+        "MongoStack": {
+            "Type": "AWS::OpsWorks::Stack",
+            "Properties": {
+                "Name": {
+                    "Ref": "AWS::StackName"
+                },
+                "CustomJson": {
+                    "mongodb": {
+                        "config":{
+                            "dbpath": "/mnt/mongodb-data"
+                        }
+                    }
+                },
+                "ServiceRoleArn": {
+                    "Fn::Join": ["", ["arn:aws:iam::", { "Ref": "AWS::AccountId" }, ":role/aws-opsworks-service-role"]]
+                },
+                "DefaultInstanceProfileArn": {
+                    "Fn::Join": ["", ["arn:aws:iam::", { "Ref": "AWS::AccountId" }, ":instance-profile/aws-opsworks-ec2-role"]]
+                },
+                "ConfigurationManager": {
+                    "Name": "Chef",
+                    "Version": "11.10"
+                },
+                "ChefConfiguration": {
+                    "BerkshelfVersion": "3.1.3",
+                    "ManageBerkshelf": true
+                },
+                "DefaultOs": "Ubuntu 14.04 LTS",
+                "DefaultRootDeviceType": "ebs",
+                "DefaultSshKeyName": { "Ref": "SshKeyName" },
+                "UseCustomCookbooks": true,
+                "UseOpsworksSecurityGroups": false,
+                "CustomCookbooksSource": {
+                    "Type": "git",
+                    "Url": {
+                        "Ref": "CookbookRepo"
+                    }
+                }
+            }
+        },
+
+        "MongoLayer": {
+            "Type": "AWS::OpsWorks::Layer",
+            "Properties": {
+                "StackId": {
+                    "Ref": "MongoStack"
+                },
+                "Name": "Mongo",
+                "Type": "custom",
+                "Shortname": "mongo",
+                "CustomRecipes": {
+                    "Setup": { "Ref": "RecipeList" }
+                },
+                "EnableAutoHealing": false,
+                "AutoAssignElasticIps": false,
+                "AutoAssignPublicIps": true,
+                "VolumeConfigurations": [
+                    {
+                        "MountPoint": "/mnt/mongodb-data",
+                        "NumberOfDisks": 1,
+                        "Size": 200,
+                        "VolumeType": "gp2"
+                    }
+                ],
+                "CustomSecurityGroupIds": [
+                    {"Ref": "SecurityGroupMongoLayer"}
+                ]
+            }
+        }
+
+    }
+}
