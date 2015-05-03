@@ -15,8 +15,6 @@ module Admiral
 
       namespace :cf
 
-      default_command :create
-
       class_option :template,
         desc: 'Path to CloudFormation JSON template.',
         default: 'CloudFormation.template'
