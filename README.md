@@ -41,7 +41,11 @@ Options:
       [--params=PARAMS]               # Path to override parameter definitions file. Defaults to <environment>.json
 ```
 
-# Setup and Configuration
+Some commands have additional options you can discover with:
+
+    # admiral cf help [COMMAND]
+
+# Configuration
 
 Admiral CloudFormation is designed around the concept of deployment environments. You parameterize your CloudFormation templates, then encode specific parameter values in JSON files for each distinct environment.
 
@@ -59,7 +63,7 @@ CloudFormation provides a facility to parameterize templates via the [`Parameter
   ...
 ```
 
-Admiral CloudFormation let's you specify specific values. For example:
+You then specify specific values for each environment. For example:
 
 ```javascript
   {
@@ -68,11 +72,21 @@ Admiral CloudFormation let's you specify specific values. For example:
   }
 ```
 
+Admiral then applies the parameters for a given environment to your CloudFormation templates as required by whatever action you are performing.
+
 ## Examples
 
 To create a new CloudFormation stack (and its associated resources) using a staging configuration:
 
       $ admiral cf create --environment staging --template ./CloudFormation.template
+
+Create a stack using the default template (./CloudFormation.template) using a custom JSON file:
+
+      $ admiral cf create --params /usr/local/config/custom.json
+
+Update the default stack using the default environment (./production.json):
+
+      $ admiral cf update
 
 # CloudFormation Templates
 
