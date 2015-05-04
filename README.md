@@ -1,6 +1,8 @@
 # Admiral for AWS CloudFormation
 
-An Admiral module that implements tasks for wielding AWS CloudFormation templates. Use it to manage CloudFormation templates and their parameters.
+An Admiral module that implements tasks for wielding AWS CloudFormation templates and configuration.
+
+For additional modules, see the [Admiral base prjoect](https://github.com/flippyhead/admiral).
 
 ## Installation
 
@@ -43,11 +45,11 @@ Options:
 
 Some commands have additional options you can discover with:
 
-    # admiral cf help [COMMAND]
+    $ admiral cf help [COMMAND]
 
 # Configuration
 
-Admiral CloudFormation is designed around the concept of deployment environments. You parameterize your CloudFormation templates, then encode specific parameter values in JSON files for each distinct environment.
+Admiral CloudFormation is designed around the concept of the deployment `environment`. You parameterize your CloudFormation templates, then encode specific parameter values in JSON files for each distinct environment.
 
 For example you may have CloudFormation templates for your database servers and your web application servers, and distinct configurations for production, staging and test environments.
 
@@ -84,7 +86,7 @@ Create a stack using the default template (./CloudFormation.template) using a cu
 
       $ admiral cf create --params /usr/local/config/custom.json
 
-Update the default stack using the default environment (./production.json):
+Update using the default template (./CloudFormation.template) and the default environment config (./production.json):
 
       $ admiral cf update
 
