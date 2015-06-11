@@ -69,13 +69,13 @@
         },
 
         "PrimaryAppId": {
-            "Description": "fetching app id ",
-            "Value": { "Ref": "FetchingApp"}
+            "Description": "primary app id ",
+            "Value": { "Ref": "PrimaryApp"}
         },
 
          "SecondaryAppId": {
             "Description": "exporter app id ",
-            "Value": { "Ref": "FetchingExporter"}
+            "Value": { "Ref": "SecondaryApp"}
         }
 
     },
@@ -213,8 +213,8 @@
             "Type":"AWS::OpsWorks::App",
             "Properties": {
                 "Type": "nodejs",
-                "Name": "Fetching Application",
-                "Shortname": "fetching-app",
+                "Name": "Primary Application",
+                "Shortname": "primary-app",
                 "StackId": {
                     "Ref": "MeteorStack"
                 },
@@ -231,8 +231,8 @@
             "Type":"AWS::OpsWorks::App",
             "Properties": {
                 "Type": "nodejs",
-                "Name": "Fetching Exporter",
-                "Shortname": "fetching-exporter",
+                "Name": "Secondary App",
+                "Shortname": "secondary-app",
                 "StackId": {
                     "Ref": "MeteorStack"
                 },
