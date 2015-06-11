@@ -9,6 +9,7 @@ module Admiral
       extend Admiral::Base
       include Util::CloudFormation
 
+      EXAMPLES = ['elasticsearch', 'meteor', 'mongo']
       NAME = 'cf'
       USAGE = 'cf <command> <options>'
       DESCRIPTION = 'Commands for wielding AWS CloudFormation templates.'
@@ -43,6 +44,16 @@ module Admiral
 
       def destroy
         super stack_name options[:environment]
+      end
+
+      desc 'init TYPE', 'Create CloudFormation template and configuration files for TYPE. TYPE is one of "mongo", "meteor", or "elasticsearch"'
+
+      def init(type)
+        raise ArgumentError, "#{type} must be one of #{EXAMPLES.join(',')}" unless EXAMPLES.include?(type)
+
+        path = File.expand_path("../../../examples/#{type}", __FILE__)
+        FileUtils.cp Dir.glob("#{path}/*"), Dir.getwd
+        puts "[admiral] #{type} CloudFormation setup initialized."
       end
 
     end
