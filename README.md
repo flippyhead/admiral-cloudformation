@@ -2,7 +2,7 @@
 
 An Admiral module that implements tasks for wielding AWS CloudFormation templates and configuration.
 
-For additional modules, see the [Admiral base prjoect](https://github.com/flippyhead/admiral).
+For additional modules, see the [Admiral base project](https://github.com/flippyhead/admiral).
 
 Developed in Seattle at [Fetching](http://fetching.io).
 
