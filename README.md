@@ -85,7 +85,9 @@ Admiral CloudFormation provides complete CloudFormation templates for some commo
 
       $ admiral cf init <type>
 
-Where type is one of `mongo`, `elasticsearch` or `meteor`. More example templates will be added in the future.
+Where type is one of `mongo`, `elasticsearch` or `meteor`. In the current working directory, this will create a `CloudFormation.template` and `staging.json` and `production.json` files. These are complete configurations using best practices for each server type but you'll need to customize a few things including SSL certificate and security group names.
+
+More example templates will be added in the future.
 
 ## Examples
 
@@ -100,7 +102,3 @@ Create a stack using the default template (./CloudFormation.template) using a cu
 Update using the default template (./CloudFormation.template) and the default environment config (./production.json):
 
       $ admiral cf update
-
-# CloudFormation Templates
-
-Example CloudFormation templates for ElasticSearch, Meteor and MongoDB are included in the `examples` directory.
