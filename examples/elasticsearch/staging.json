@@ -1,0 +1,16 @@
+{
+  "Route53ZoneName": "staging.example.io.",
+  "SearchDomainName": "search.staging.example.io",
+  "SSLCertificateName": "search.staging.example.io",
+  "SshKeyName": "staging",
+  "InstanceCount":"2",
+  "InstanceType": "t2.medium",
+  "ElasticSearchVersion": "1.4.4",
+  "ElasticSearchAWSCloudPluginVersion": "2.4.1",
+  "SearchUser":"admin",
+  "SearchPassword":"example-password",
+  "ClusterName": "staging-cluster",
+  "MinMasterNodes": "1",
+  "SecurityGroupLoadBalancer": "sg-8aa123",
+  "SecurityGroupSearchLayer": "sg-9e9123"
+}

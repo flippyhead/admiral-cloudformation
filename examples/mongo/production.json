@@ -1,7 +1,7 @@
 {
   "SshKeyName": "production",
   "InstanceCount":"1",
-  "InstanceType": "t2.small",
+  "InstanceType": "c3.large",
   "MongoVersion": "2.6.1",
   "SecurityGroupMongoLayer": "sg-334rt5fc"
 }

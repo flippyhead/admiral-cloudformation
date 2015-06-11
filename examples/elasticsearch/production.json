@@ -4,13 +4,13 @@
   "SSLCertificateName": "search.example.io",
   "SshKeyName": "production",
   "InstanceCount":"2",
-  "InstanceType": "t2.medium",
+  "InstanceType": "c3.large",
   "ElasticSearchVersion": "1.4.4",
   "ElasticSearchAWSCloudPluginVersion": "2.4.1",
   "SearchUser":"admin",
   "SearchPassword":"example-password",
-  "ClusterName": "staging-cluster",
+  "ClusterName": "production-cluster",
   "MinMasterNodes": "1",
-  "SecurityGroupLoadBalancer": "sg-8aab365ef",
-  "SecurityGroupSearchLayer": "sg-9e9d35f8"
+  "SecurityGroupLoadBalancer": "sg-8aab365abc",
+  "SecurityGroupSearchLayer": "sg-9e9d3abc"
 }

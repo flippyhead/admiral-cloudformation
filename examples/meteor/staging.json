@@ -1,0 +1,10 @@
+{
+  "Route53ZoneName": "staging.example.io.",
+  "AppDomainName": "app.staging.example.io",
+  "SSLCertificateName": "app.staging.example.io",
+  "SshKeyName": "staging",
+  "InstanceCount":"1",
+  "InstanceType": "t2.small",
+  "SecurityGroupLoadBalancer": "sg-8ad62234ef",
+  "SecurityGroupMeteorLayer": "sg-2265dsd7"
+}

@@ -1,0 +1,7 @@
+{
+  "SshKeyName": "staging",
+  "InstanceCount":"1",
+  "InstanceType": "t2.small",
+  "MongoVersion": "2.6.1",
+  "SecurityGroupMongoLayer": "sg-334rtxyz"
+}
