@@ -22,11 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-On your command line type:
+To see a list of available commands, on the command line enter:
 
     $ admiral cf help
 
-To see a list of available commands. Make sure your bundle bin is in your PATH.
+Make sure your bundle bin is in your PATH.
 
 The following commands are available:
 
@@ -50,7 +50,23 @@ Some commands have additional options you can discover with:
 
     $ admiral cf help [COMMAND]
 
-# Configuration
+## Setup
+
+It is recommended that you create a distinct repository for each cluster type. For example you might have: `server-elasticsearch`, `server-mongodb`, and `server-meteor` repositories each which specific cluster configurations.
+
+Within each repo simply run the `init` command to get started (see below).
+
+## Easy Setup
+
+Admiral CloudFormation provides complete CloudFormation templates for some common server configurations. To initialize your project you can use:
+
+      $ admiral cf init <type>
+
+Where type is one of `mongo`, `elasticsearch` or `meteor`. In the current working directory, this will create a `CloudFormation.template` and `staging.json` and `production.json` files. These are complete configurations using best practices for each server type. You'll need to customize a few things including SSL certificate and security group names.
+
+More example templates will be added in the future.
+
+## Configuration
 
 Admiral CloudFormation is designed around the concept of the deployment `environment`. You parameterize your CloudFormation templates, then encode specific parameter values in JSON files for each distinct environment.
 
@@ -58,7 +74,7 @@ For example you may have CloudFormation templates for your database servers and 
 
 CloudFormation provides a facility to parameterize templates via the [`Parameters`](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html) section. For example:
 
-```javascript
+```json
   ...
   "InstanceType": {
       "Description": "The type of instance to launch.",
@@ -70,7 +86,7 @@ CloudFormation provides a facility to parameterize templates via the [`Parameter
 
 You then specify specific values for each environment. For example, in the `production.json` file:
 
-```javascript
+```json
   {
     "InstanceCount":"2",
     "InstanceType": "t2.medium",
@@ -78,16 +94,6 @@ You then specify specific values for each environment. For example, in the `prod
 ```
 
 Admiral then applies the parameters for a given environment to your CloudFormation templates as required by whatever action you are performing.
-
-## Easy Setup
-
-Admiral CloudFormation provides complete CloudFormation templates for some common server configurations. To initialize your project you can use:
-
-      $ admiral cf init <type>
-
-Where type is one of `mongo`, `elasticsearch` or `meteor`. In the current working directory, this will create a `CloudFormation.template` and `staging.json` and `production.json` files. These are complete configurations using best practices for each server type but you'll need to customize a few things including SSL certificate and security group names.
-
-More example templates will be added in the future.
 
 ## Examples
 
@@ -102,3 +108,13 @@ Create a stack using the default template (./CloudFormation.template) using a cu
 Update using the default template (./CloudFormation.template) and the default environment config (./production.json):
 
       $ admiral cf update
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+This project was heavily inspired by [this blog post](http://www.thoughtworks.com/mingle/news/scaling/2015/01/06/How-Mingle-Built-ElasticSearch-Cluster.html) -- thanks ThoughtWorks!
