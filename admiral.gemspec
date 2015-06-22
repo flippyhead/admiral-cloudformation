@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "admiral-cloudformation"
-  spec.version       = '0.0.3'
+  spec.version       = '0.0.4'
   spec.authors       = ["Peter T. Brown"]
   spec.email         = ["p@ptb.io"]
   spec.description   = %q{An Admiral module that implements tasks for wielding AWS CloudFormation templates. Use it to manage CloudFormation templates and their parameters.}
